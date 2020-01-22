@@ -23,6 +23,15 @@ const Note = {
         noteElement.addEventListener('dragleave', Note.dragleave)
         noteElement.addEventListener('drop', Note.drop)
     },
+    create() {
+        const noteElement = document.createElement('div')
+        noteElement.classList.add('note')
+        noteElement.setAttribute('draggable', 'true')
+        noteElement.setAttribute('data-note-id', Note.IdCounter)
+        Note.IdCounter++;
+        Note.process(noteElement);
+        return noteElement
+    },
     dragstart(event) {
         Note.dragged = this
         this.classList.add('dragged')

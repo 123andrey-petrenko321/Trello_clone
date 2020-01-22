@@ -3,13 +3,8 @@ const Column = {
     process(columnElement) {
         const spanAction_addNote = columnElement.querySelector('[data-action-addNote]')
         spanAction_addNote.addEventListener('click', function (event) {
-            const noteElement = document.createElement('div')
-            noteElement.classList.add('note')
-            noteElement.setAttribute('draggable', 'true')
-            noteElement.setAttribute('data-note-id', Note.IdCounter)
-            Note.IdCounter++;
+            const noteElement = Note.create()
             columnElement.querySelector('[data-notes]').append(noteElement)
-            Note.process(noteElement);
             noteElement.setAttribute('contenteditable', 'true')
             noteElement.focus()
         })
