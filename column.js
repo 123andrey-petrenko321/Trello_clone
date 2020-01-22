@@ -1,4 +1,5 @@
 const Column = {
+    dragged:null,
     idCounter: 4,
     process(columnElement) {
         const spanAction_addNote = columnElement.querySelector('[data-action-addNote]')
@@ -16,8 +17,41 @@ const Column = {
         headerElement.addEventListener('blur', function (event) {
             headerElement.removeAttribute('contenteditable', 'true')
         })
+
+        columnElement.addEventListener('dragstart', Column.dragstart)
+        columnElement.addEventListener('dragend', Column.dragend)
+
+        columnElement.addEventListener('dragenter', Column.dragenter)
+        columnElement.addEventListener('dragover', Column.dragover)
+        columnElement.addEventListener('dragleave', Column.dragleave)
+
         columnElement.addEventListener('dragover', Column.dragover)
         columnElement.addEventListener('drop', Column.drop)
+    },
+    dragstart(event){
+        Column.dragged = this
+        Column.dragged.classList.add('dragged')
+        event.stopPropagation();
+    },
+    dragend(event){
+        Column.dragged.classList.remove('dragged')
+        Column.dragged = null
+    },
+    dragenter(event){
+        if(!Column.dragged || Column.dragged === this){
+            return
+        }
+    },
+    dragover(event){
+        event.preventDefault();
+        if(!Column.dragged || Column.dragged === this){
+            return
+        }
+    },
+    dragleave(event){
+        if(!Column.dragged || Column.dragged === this){
+            return
+        }
     },
     dragover(event) {
         event.preventDefault();
@@ -25,6 +59,8 @@ const Column = {
     drop(event) {
         if (Note.dragged) {
             return this.querySelector('[data-notes]').append(Note.dragged)
+        }else if( Column.dragged){
+            console.log('drop column')
         }
     }
 }
