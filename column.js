@@ -18,14 +18,30 @@ const Column = {
         headerElement.addEventListener('blur', function (event) {
             headerElement.removeAttribute('contenteditable', 'true')
         })
-
         columnElement.addEventListener('dragstart', Column.dragstart)
         columnElement.addEventListener('dragend', Column.dragend)
-
-        // columnElement.addEventListener('dragenter', Column.dragenter)
         columnElement.addEventListener('dragover', Column.dragover)
-        // columnElement.addEventListener('dragleave', Column.dragleave)
         columnElement.addEventListener('drop', Column.drop)
+    },
+    create(id = null) {
+        const columnElement = document.createElement('div')
+        columnElement.classList.add('column')
+        columnElement.setAttribute('draggable', 'true')
+        if (id) {
+            columnElement.setAttribute('data-column-id', id)
+        } else {
+            columnElement.setAttribute('data-column-id', Column.idCounter)
+            Column.idCounter++;
+        }
+        columnElement.innerHTML = ` 
+        <p class="column-header">В плане</p>
+        <div data-notes></div>
+        <p class="column-footer">
+            <span data-action-addNote class="action">+ Добавить карточку</span>
+        </p>
+        `
+        Column.process(columnElement);
+        return columnElement
     },
     dragstart(event) {
         Column.dragged = this
@@ -43,13 +59,8 @@ const Column = {
         document
             .querySelectorAll('.note')
             .forEach(noteElement => noteElement.setAttribute('draggable', true))
+        Application.save()
     },
-    // dragenter(event) {
-    //     if (!Column.dragged || Column.dragged === this) {
-    //         return
-    //     }
-    //     this.classList.add('under')
-    // },
     dragover(event) {
         event.preventDefault();
         event.stopPropagation()
@@ -71,12 +82,6 @@ const Column = {
 
         this.classList.add('under')
     },
-    // dragleave(event) {
-    //     if (!Column.dragged || Column.dragged === this) {
-    //         return
-    //     }
-    //     this.classList.remove('under')
-    // },
     drop(event) {
         if (Note.dragged) {
             return this.querySelector('[data-notes]').append(Note.dragged)
