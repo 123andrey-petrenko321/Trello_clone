@@ -9,6 +9,7 @@ const Column = {
             columnElement.querySelector('[data-notes]').append(noteElement)
             noteElement.setAttribute('contenteditable', 'true')
             noteElement.focus()
+
         })
         const headerElement = columnElement.querySelector('.column-header')
         headerElement.addEventListener('dblclick', function (event) {
@@ -17,6 +18,7 @@ const Column = {
         })
         headerElement.addEventListener('blur', function (event) {
             headerElement.removeAttribute('contenteditable', 'true')
+
         })
         columnElement.addEventListener('dragstart', Column.dragstart)
         columnElement.addEventListener('dragend', Column.dragend)

@@ -14,7 +14,6 @@ const Application = {
             .querySelectorAll('.column')
             .forEach(columnElement => {
                 const column = {
-                    title: '',
                     id: parseInt(columnElement.getAttribute('data-column-id')),
                     noteIds: []
                 }
@@ -25,7 +24,7 @@ const Application = {
                     })
 
                 object.columns.items.push(column)
-
+                console.log(column)
             })
 
         document
