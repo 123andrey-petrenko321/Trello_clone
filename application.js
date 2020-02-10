@@ -15,6 +15,7 @@ const Application = {
             .forEach(columnElement => {
                 const column = {
                     id: parseInt(columnElement.getAttribute('data-column-id')),
+                    title: columnElement.querySelector('.column-header').textContent,
                     noteIds: []
                 }
                 columnElement
@@ -24,7 +25,7 @@ const Application = {
                     })
 
                 object.columns.items.push(column)
-                console.log(column)
+
             })
 
         document
@@ -53,7 +54,7 @@ const Application = {
 
         for (const column of object.columns.items) {
             const columnElement = Column.create(column.id)
-
+            columnElement.querySelector('.column-header').textContent = column.title
             mountePoint.append(columnElement)
 
 
