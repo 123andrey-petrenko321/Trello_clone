@@ -9,8 +9,16 @@ const Column = {
             columnElement.querySelector('[data-notes]').append(noteElement)
             noteElement.setAttribute('contenteditable', 'true')
             noteElement.focus()
-
         })
+        const buck = columnElement.querySelector('.remove')
+        buck.addEventListener('click', function (el) {
+            if (el.target && el.target.classList.contains('remove')) {
+                let child = el.target.closest('.column')
+                child.parentNode.removeChild(child)
+            }
+            Application.save()
+        })
+
         const headerElement = columnElement.querySelector('.column-header')
         headerElement.addEventListener('dblclick', function (event) {
             headerElement.setAttribute('contenteditable', 'true')
@@ -37,6 +45,7 @@ const Column = {
         }
         columnElement.innerHTML = ` 
         <p class="column-header">В плане</p>
+        <button class="remove" type ="remove">X</button>
         <div data-notes></div>
         <p class="column-footer">
             <span data-action-addNote class="action">+ Добавить карточку</span>
@@ -45,6 +54,7 @@ const Column = {
         Column.process(columnElement);
         return columnElement
     },
+
     dragstart(event) {
         Column.dragged = this
         Column.dragged.classList.add('dragged')

@@ -5,10 +5,8 @@ document
     .addEventListener('click', function (event) {
         const columnElement = Column.create()
         document.querySelector('.columns').append(columnElement);
-
         Application.save()
     })
-
 
 
 

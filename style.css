@@ -36,6 +36,7 @@ body {
 .column {
     background: #f1f1f1;
     padding: 10px 15px;
+    position: relative;
 }
 
 .adder {
@@ -57,7 +58,18 @@ body {
     margin: 0;
     padding: 15px 20px;
 }
-
+.remove{
+    border:none;
+    position: absolute;
+    right: 5px;
+    top: 12px;
+    font-size: 10px;
+    font-weight: 400;
+    color: rgb(82, 106, 122);
+}
+.remove:hover {
+	background-color: rgba(227, 242, 253, 0.7);
+}
 .column-header {
     text-align: left;
     font-size: 14px;
